@@ -15,6 +15,8 @@ export const verifyToken = async (req, res, next) => {
         req.id = decoded.userId;
     });
 
+    console.log(req.id);
+
     const [rows] = await pool.query("SELECT * FROM user WHERE id = ?", [
         req.id,
     ]);

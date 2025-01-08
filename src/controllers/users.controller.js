@@ -9,6 +9,48 @@ export const getUsers = async (req, res) => {
   }
 };
 
+export const getUserWithDataByToken = async (req, res) => {
+  try {
+    const user_id = req.id;
+    console.log(user_id);
+    const [userRows] = await pool.query(
+      "SELECT * FROM user WHERE id = ?", [
+      user_id,
+    ]);
+
+    if (userRows.length <= 0) {
+      return res.json(false);
+    }
+
+    const user = userRows[0];
+    let additionalData = {};
+
+    if (user.rol === 'student') {
+      const [studentRows] = await pool.query(
+        "SELECT * FROM student WHERE user_id = ?", [
+        user_id,
+      ]);
+      additionalData = studentRows[0] || {};
+    } else if (user.rol === 'teacher') {
+      const [teacherRows] = await pool.query(
+        "SELECT * FROM teacher WHERE user_id = ?", [
+        user_id,
+      ]);
+      additionalData = teacherRows[0] || {};
+    } else if (user.rol === 'tutor') {
+      const [tutorRows] = await pool.query(
+        "SELECT * FROM tutor WHERE user_id = ?", [
+        user_id,
+      ]);
+      additionalData = tutorRows[0] || {};
+    }
+
+    res.json({ ...user, ...additionalData });
+  } catch (error) {
+    return res.status(500).json({ message: "Something goes wrong" });
+  }
+};
+
 export const validateStudentEmail = async (req, res) => {
   try {
     const { studentEmail } = req.body;

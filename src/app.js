@@ -9,6 +9,7 @@ import authRoutes from "./routes/auth.routes.js";
 import teachersRoutes from "./routes/teachers.routes.js";
 import coursesRoutes from "./routes/courses.routes.js";
 import schoolsRoutes from "./routes/schools.routes.js";
+import courses_studentsRoutes from "./routes/courses_students.routes.js";
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use("/api", teachersRoutes);
 app.use("/api", coursesRoutes);
 app.use("/api", schoolsRoutes);
 app.use("/api", tutorsRoutes);
+app.use("/api", courses_studentsRoutes);
 
 
 app.use((req, res, next) => {

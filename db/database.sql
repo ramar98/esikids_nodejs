@@ -9,13 +9,14 @@ CREATE TABLE employee (
   PRIMARY KEY(id)
 );
 
-CREATE TABLE alumno (
+CREATE TABLE student (
   id INT(11) NOT NULL AUTO_INCREMENT,
   user_id INT(11) DEFAULT NULL,
   name VARCHAR(45) DEFAULT NULL,
   lastname VARCHAR(45) DEFAULT NULL,
   birthdate DATE DEFAULT NULL,
-  age INT(11) DEFAULT NULL, 
+  age INT(11) DEFAULT NULL,
+  avatar INT(11) DEFAULT NULL, 
   PRIMARY KEY(id)
 );
 
@@ -27,6 +28,7 @@ CREATE TABLE teacher (
   birthdate DATE DEFAULT NULL,
   age INT(11) DEFAULT NULL, 
   avatar INT(11) DEFAULT NULL,
+  dni VARCHAR(45) DEFAULT NULL,
   PRIMARY KEY(id)
 );
 

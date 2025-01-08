@@ -7,7 +7,9 @@ import {
   validateStudentEmail,
   validateEmail,
   validateDni,
+  getUserWithDataByToken
 } from "../controllers/users.controller.js";
+import { verifyToken } from "../middlewares/authJwt.js";
 
 const router = Router();
 
@@ -16,6 +18,9 @@ router.get("/users", getUsers);
 
 // GET An User
 router.get("/users/:id", getUser);
+
+// GET An User by Token
+router.get("/usertoken", verifyToken, getUserWithDataByToken);
 
 // DELETE An User
 router.delete("/users/:id", deleteUser);
