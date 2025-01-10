@@ -3,6 +3,7 @@ import { pool } from "../db.js";
 export const getCoursesByUserId = async (req, res) => {
   try {
     const user_id = req.id;
+    console.log(user_id);
     const [rows] = await pool.query(
       "SELECT COURSE.*, escuela.nombre as schoolName FROM COURSE JOIN escuela ON COURSE.school_id = escuela.id WHERE COURSE.teacher_id = (SELECT id FROM teacher WHERE user_id = ?)", [
       user_id,
