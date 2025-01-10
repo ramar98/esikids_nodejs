@@ -24,7 +24,7 @@ export const getCourseById = async (req, res) => {
     const user_id = req.id;
     const { course_id } = req.params;
     const [rows] = await pool.query(
-      "SELECT COURSE.*, escuela.nombre as schoolName FROM COURSE JOIN escuela ON COURSE.school_id = escuela.id WHERE COURSE.teacher_id = (SELECT id FROM teacher WHERE user_id = ?) AND COURSE.id = ?", [
+      "SELECT course.*, escuela.nombre as schoolName FROM course JOIN escuela ON course.school_id = escuela.id WHERE course.teacher_id = (SELECT id FROM teacher WHERE user_id = ?) AND course.id = ?", [
       user_id, course_id
     ]);
 
@@ -44,7 +44,7 @@ export const updateCourse = async (req, res) => {
     const { name, schoolName, courseAge, course_id } = req.body;
     console.log(name, schoolName, courseAge, user_id, course_id);
     const [rows] = await pool.query(
-      "UPDATE COURSE SET name = ?, schoolName = ?, courseAge = ? WHERE teacher_id = (SELECT id FROM teacher WHERE user_id = ?) AND id = ?", [
+      "UPDATE course SET name = ?, schoolName = ?, courseAge = ? WHERE teacher_id = (SELECT id FROM teacher WHERE user_id = ?) AND id = ?", [
       name, schoolName, courseAge, user_id, course_id
     ]);
 
@@ -71,7 +71,7 @@ export const createCourse = async (req, res) => {
     }
     const teacher_id = teachers[0].id;
     const [rows] = await pool.query(
-      "INSERT INTO COURSE (teacher_id, name, school_id, courseAge) VALUES (?, ?, ?, ?)", [
+      "INSERT INTO course (teacher_id, name, school_id, courseAge) VALUES (?, ?, ?, ?)", [
       teacher_id, name, school_id, courseAge
     ]);
 
@@ -86,7 +86,7 @@ export const deleteCourse = async (req, res) => {
     const user_id = req.id;
     const { course_id } = req.params;
     const [rows] = await pool.query(
-      "DELETE FROM COURSE WHERE teacher_id = (SELECT id FROM teacher WHERE user_id = ?) AND id = ?", [
+      "DELETE FROM course WHERE teacher_id = (SELECT id FROM teacher WHERE user_id = ?) AND id = ?", [
       user_id, course_id
     ]);
 
