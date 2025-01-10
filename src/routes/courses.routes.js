@@ -9,7 +9,7 @@ import {
 import { verifyToken } from "../middlewares/authJwt.js";
 const router = Router();
 
-router.get('/coursesByUserId/', getCoursesByUserId);
+router.get('/coursesByUserId/', verifyToken, getCoursesByUserId);
 router.post('/courses/createCourse', verifyToken, createCourse);
 router.get('/courses/:course_id', verifyToken, getCourseById);
 router.delete('/courses/:course_id', verifyToken, deleteCourse);
