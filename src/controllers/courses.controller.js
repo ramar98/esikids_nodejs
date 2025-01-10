@@ -5,7 +5,7 @@ export const getCoursesByUserId = async (req, res) => {
     const user_id = req.id;
     console.log(user_id);
     const [rows] = await pool.query(
-      "SELECT COURSE.*, escuela.nombre AS schoolName FROM COURSE JOIN escuela ON COURSE.school_id = escuela.id JOIN teacher ON COURSE.teacher_id = teacher.id WHERE teacher.user_id = ?", [
+      "SELECT course.*, escuela.nombre AS schoolName FROM course JOIN escuela ON course.school_id = escuela.id JOIN teacher ON course.teacher_id = teacher.id WHERE teacher.user_id = ?", [
       user_id,
     ]);
 
