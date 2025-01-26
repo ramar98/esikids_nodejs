@@ -10,6 +10,9 @@ import teachersRoutes from "./routes/teachers.routes.js";
 import coursesRoutes from "./routes/courses.routes.js";
 import schoolsRoutes from "./routes/schools.routes.js";
 import courses_studentsRoutes from "./routes/courses_students.routes.js";
+import users_stagesRoutes from "./routes/users_stages.routes.js";
+import games from "./routes/games.routes.js";
+import stages from "./routes/stages.routes.js";
 
 const app = express();
 
@@ -27,6 +30,9 @@ app.use("/api", coursesRoutes);
 app.use("/api", schoolsRoutes);
 app.use("/api", tutorsRoutes);
 app.use("/api", courses_studentsRoutes);
+app.use("/api", users_stagesRoutes);
+app.use("/api", games);
+app.use("/api", stages);
 
 
 app.use((req, res, next) => {

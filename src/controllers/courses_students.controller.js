@@ -5,7 +5,7 @@ export const getStudentsByCourse = async (req, res) => {
 
     try {
         const query = `
-            SELECT s.id, s.name, u.username
+            SELECT s.id, s.name, u.username, u.id AS user_id
             FROM student s
             JOIN course_student cs ON s.id = cs.student_id
             JOIN user u ON s.user_id = u.id

@@ -3,7 +3,6 @@ import { pool } from "../db.js";
 export const getCoursesByUserId = async (req, res) => {
   try {
     const user_id = req.id;
-    console.log(user_id);
     const [rows] = await pool.query(
       "SELECT course.*, escuela.nombre AS schoolName FROM course JOIN escuela ON course.school_id = escuela.id JOIN teacher ON course.teacher_id = teacher.id WHERE teacher.user_id = ?", [
       user_id,
@@ -42,7 +41,6 @@ export const updateCourse = async (req, res) => {
   try {
     const user_id = req.id;
     const { name, schoolName, courseAge, course_id } = req.body;
-    console.log(name, schoolName, courseAge, user_id, course_id);
     const [rows] = await pool.query(
       "UPDATE course SET name = ?, schoolName = ?, courseAge = ? WHERE teacher_id = (SELECT id FROM teacher WHERE user_id = ?) AND id = ?", [
       name, schoolName, courseAge, user_id, course_id

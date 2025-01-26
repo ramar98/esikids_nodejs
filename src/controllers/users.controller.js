@@ -12,7 +12,6 @@ export const getUsers = async (req, res) => {
 export const getUserWithDataByToken = async (req, res) => {
   try {
     const user_id = req.id;
-    console.log(user_id);
     const [userRows] = await pool.query(
       "SELECT * FROM user WHERE id = ?", [
       user_id,

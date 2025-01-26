@@ -59,7 +59,6 @@ export const login = async (req, res) => {
 
 export const registerUser = async (req, res) => {
     const { username, password, email, studentEmail, rol } = req.body;
-    console.log(req.body);
     try {
         const [existingUser] = await pool.query(
             "SELECT * FROM user WHERE username = ?",
