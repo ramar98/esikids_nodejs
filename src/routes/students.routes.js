@@ -6,6 +6,7 @@ import {
   getStudents,
   updateStudent,
   getStudentsWithUsername,
+  getStudentByUser_id
 } from "../controllers/students.controller.js";
 import { verifyToken } from "../middlewares/authJwt.js";
 
@@ -26,5 +27,7 @@ router.post("/students", createStudent);
 router.put("/students/:id", updateStudent);
 
 router.get("/studentsWithUsername/:school_id", getStudentsWithUsername);
+
+router.get("/studentsByUser_id/:user_id", verifyToken, getStudentByUser_id);
 
 export default router;

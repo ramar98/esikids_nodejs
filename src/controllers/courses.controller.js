@@ -40,10 +40,10 @@ export const getCourseById = async (req, res) => {
 export const updateCourse = async (req, res) => {
   try {
     const user_id = req.id;
-    const { name, schoolName, courseAge, course_id } = req.body;
+    const { name, school_id, courseAge, course_id } = req.body;
     const [rows] = await pool.query(
-      "UPDATE course SET name = ?, schoolName = ?, courseAge = ? WHERE teacher_id = (SELECT id FROM teacher WHERE user_id = ?) AND id = ?", [
-      name, schoolName, courseAge, user_id, course_id
+      "UPDATE course SET name = ?, school_id = ?, courseAge = ? WHERE teacher_id = (SELECT id FROM teacher WHERE user_id = ?) AND id = ?", [
+      name, school_id, courseAge, user_id, course_id
     ]);
 
     if (rows.affectedRows <= 0) {

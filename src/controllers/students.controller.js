@@ -13,7 +13,16 @@ export const getStudentsWithUsername = async (req, res) => {
   const { school_id } = req.params;
   try {
     const [rows] = await pool.query(
-      "SELECT s.*, u.username FROM student s JOIN user u ON s.user_id = u.id WHERE s.school_id = ?",
+      `SELECT s.*, u.username, 
+      CASE 
+      WHEN TIMESTAMPDIFF(YEAR, s.birthdate, CURDATE()) BETWEEN 3 AND 5 THEN '3-5'
+      WHEN TIMESTAMPDIFF(YEAR, s.birthdate, CURDATE()) BETWEEN 6 AND 9 THEN '6-9'
+      WHEN TIMESTAMPDIFF(YEAR, s.birthdate, CURDATE()) BETWEEN 10 AND 12 THEN '10-12'
+      ELSE 'Other'
+      END AS age_range 
+      FROM student s 
+      JOIN user u ON s.user_id = u.id 
+      WHERE s.school_id = ?`,
       [school_id]
     );
     res.json(rows);
@@ -27,6 +36,23 @@ export const getStudent = async (req, res) => {
     const { id } = req.params;
     const [rows] = await pool.query("SELECT * FROM student WHERE id = ?", [
       id,
+    ]);
+
+    if (rows.length <= 0) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    res.json(rows[0]);
+  } catch (error) {
+    return res.status(500).json({ message: "Something goes wrong" });
+  }
+};
+
+export const getStudentByUser_id = async (req, res) => {
+  try {
+    const { user_id } = req.params;
+    const [rows] = await pool.query("SELECT * FROM student WHERE user_id = ?", [
+      user_id,
     ]);
 
     if (rows.length <= 0) {
