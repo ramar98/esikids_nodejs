@@ -184,7 +184,7 @@ export const updateUser = async (req, res) => {
     const { username, password, email, studentEmail } = req.body;
 
     const [result] = await pool.query(
-      "UPDATE user SET username = IFNULL(?, username), pass = IFNULL(?, pass) , email = IFNULL(?, email), studentEmail = IFNULL(?, studentEmail) WHERE id = ?",
+      "UPDATE user SET username = IFNULL(?, username), password = IFNULL(?, password) , email = IFNULL(?, email), studentEmail = IFNULL(?, studentEmail) WHERE id = ?",
       [username, password, email, studentEmail, id]
     );
 
