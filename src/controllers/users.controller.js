@@ -13,7 +13,7 @@ export const getUserWithDataByToken = async (req, res) => {
   try {
     const user_id = req.id;
     const [userRows] = await pool.query(
-      "SELECT username, rol, email FROM user WHERE id = ?", [
+      "SELECT username, rol, email, studentEmail FROM user WHERE id = ?", [
       user_id,
     ]);
 
