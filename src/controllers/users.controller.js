@@ -181,11 +181,11 @@ export const createUser = async (req, res) => {
 export const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const { username, pass, email } = req.body;
+    const { username, password, email, studentEmail } = req.body;
 
     const [result] = await pool.query(
-      "UPDATE user SET username = IFNULL(?, username), pass = IFNULL(?, pass) , email = IFNULL(?, email) WHERE id = ?",
-      [username, pass, email, id]
+      "UPDATE user SET username = IFNULL(?, username), pass = IFNULL(?, pass) , email = IFNULL(?, email), studentEmail = IFNULL(?, studentEmail) WHERE id = ?",
+      [username, password, email, studentEmail, id]
     );
 
     if (result.affectedRows === 0)
@@ -195,7 +195,7 @@ export const updateUser = async (req, res) => {
       id,
     ]);
 
-    res.json(rows[0]);
+    res.json(true);
   } catch (error) {
     return res.status(500).json({ message: "Something goes wrong" });
   }
