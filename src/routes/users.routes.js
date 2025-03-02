@@ -26,7 +26,7 @@ router.get("/usertoken", verifyToken, getUserWithDataByToken);
 router.delete("/users/:id", deleteUser);
 
 // UPDATE An User
-router.patch("/users/:id", updateUser);
+router.patch("/users/:id", verifyToken, updateUser);
 
 // VALIDATE STUDENTEMAIL
 router.post("/users/validateStudentEmail", validateStudentEmail);

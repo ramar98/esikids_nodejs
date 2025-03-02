@@ -6,6 +6,7 @@ import {
   getTeachers,
   updateTeacher,
 } from "../controllers/teachers.controller.js";
+import { verifyToken } from "../middlewares/authJwt.js";
 
 const router = Router();
 
@@ -21,6 +22,6 @@ router.delete("/teachers/:id", deleteTeacher);
 // INSERT An Teacher
 router.post("/teachers", createTeacher);
 
-router.put("/teachers/:id", updateTeacher);
+router.put("/teachers/:id", verifyToken, updateTeacher);
 
 export default router;

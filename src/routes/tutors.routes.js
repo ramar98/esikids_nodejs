@@ -22,6 +22,6 @@ router.delete("/tutors/:id", deleteTutor);
 // INSERT An Tutor
 router.post("/tutors", createTutor);
 
-router.put("/tutors/:id", updateTutor);
+router.put("/tutors/:id",verifyToken, updateTutor);
 
 export default router;
