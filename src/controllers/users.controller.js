@@ -26,7 +26,17 @@ export const getUserWithDataByToken = async (req, res) => {
 
     if (user.rol === 'student') {
       const [studentRows] = await pool.query(
-        "SELECT *, CASE WHEN TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN 3 AND 5 THEN '3-5' WHEN TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN 6 AND 9 THEN '6-9' WHEN TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) BETWEEN 10 AND 12 THEN '10-12' ELSE 'Other' END AS age_range FROM student WHERE user_id = ?", [
+        `SELECT s.*, 
+            CASE 
+          WHEN TIMESTAMPDIFF(YEAR, s.birthdate, CURDATE()) BETWEEN 3 AND 5 THEN '3-5' 
+          WHEN TIMESTAMPDIFF(YEAR, s.birthdate, CURDATE()) BETWEEN 6 AND 9 THEN '6-9' 
+          WHEN TIMESTAMPDIFF(YEAR, s.birthdate, CURDATE()) BETWEEN 10 AND 12 THEN '10-12' 
+          ELSE 'Other' 
+            END AS age_range,
+            e.nombreEscuela 
+         FROM student s 
+         LEFT JOIN escuela e ON s.school_id = e.id 
+         WHERE s.user_id = ?`, [
         user_id,
       ]);
       additionalData = studentRows[0] || {};
