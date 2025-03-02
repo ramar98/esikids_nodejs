@@ -109,7 +109,7 @@ export const updateStudent = async (req, res) => {
       id,
     ]);
 
-    res.json(rows[0]);
+    res.json(true);
   } catch (error) {
     return res.status(500).json({ message: "Something goes wrong" });
   }
