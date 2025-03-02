@@ -32,10 +32,10 @@ export const getUserWithDataByToken = async (req, res) => {
           WHEN TIMESTAMPDIFF(YEAR, s.birthdate, CURDATE()) BETWEEN 6 AND 9 THEN '6-9' 
           WHEN TIMESTAMPDIFF(YEAR, s.birthdate, CURDATE()) BETWEEN 10 AND 12 THEN '10-12' 
           ELSE 'Other' 
-            END AS age_range,
-            e.nombreEscuela 
-         FROM student s 
-         LEFT JOIN escuela e ON s.school_id = e.id 
+          END AS age_range,
+          e.nombre AS school_name
+         FROM student s
+         INNER JOIN escuela e ON s. school_id = e.id
          WHERE s.user_id = ?`, [
         user_id,
       ]);
