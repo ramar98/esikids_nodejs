@@ -22,6 +22,6 @@ router.delete("/teachers/:id", deleteTeacher);
 // INSERT An Teacher
 router.post("/teachers", createTeacher);
 
-router.put("/teachers/:id", verifyToken, updateTeacher);
+router.patch("/teachers/:id", verifyToken, updateTeacher);
 
 export default router;

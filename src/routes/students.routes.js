@@ -24,7 +24,7 @@ router.delete("/students/:id", deleteStudent);
 // INSERT An Student
 router.post("/students", createStudent);
 
-router.patch("/students/:id", updateStudent);
+router.patch("/students/:id", verifyToken, updateStudent);
 
 router.get("/studentsWithUsername/:school_id", getStudentsWithUsername);
 
