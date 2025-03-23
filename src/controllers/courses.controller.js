@@ -98,4 +98,48 @@ export const deleteCourse = async (req, res) => {
   }
 }
 
+export const getStudentsCompletedAllGames = async (req, res) => {
+  try {
+    const { course_id } = req.params;
+    const [rows] = await pool.query(
+    `WITH juegos_del_curso AS (
+      SELECT g.id AS game_id
+      FROM game g
+      JOIN course c ON g.age = c.courseAge
+      WHERE c.id = ?
+    ),
+    stages_por_curso AS (
+      SELECT s.id AS stage_id
+      FROM stage s
+      WHERE s.game_id IN (SELECT game_id FROM juegos_del_curso)
+    ),
+    alumnos_del_curso AS (
+      SELECT cs.student_id
+      FROM course_student cs
+      WHERE cs.course_id = ?
+    ),
+    alumnos_con_stages_completados AS (
+      SELECT us.user_id
+      FROM user_stage us
+      WHERE us.stage_id IN (SELECT stage_id FROM stages_por_curso)
+      AND us.user_id IN (SELECT s.user_id FROM student s WHERE s.id IN (SELECT student_id FROM alumnos_del_curso))
+      GROUP BY us.user_id
+      HAVING COUNT(DISTINCT us.stage_id) = (SELECT COUNT(*) FROM stages_por_curso)
+    )
+    SELECT u.id AS student_id, u.username, u.email
+    FROM alumnos_con_stages_completados acsc
+    JOIN user u ON acsc.user_id = u.id`,
+      [course_id, course_id]
+    );
+
+    if (rows.length <= 0) {
+      return res.json([]);
+    }
+
+    res.json(rows);
+  } catch (error) {
+    return res.status(500).json({ message: "Something goes wrong" });
+  }
+};
+
 
