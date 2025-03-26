@@ -21,3 +21,15 @@ export const getUsersChatbot = async (req, res) => {
         console.error(err.message);
     }
 }
+
+export const getUsersChatbotByCourse = async (req, res) => {
+    try {
+        const { course_id } = req.params;
+        const [rows] = await pool.query("SELECT uc.* FROM user_chatbot uc JOIN student s ON uc.user_id = s.user_id JOIN course_student cs ON s.id = cs.student_id WHERE cs.course_id = ?",
+            [course_id]
+        );
+        res.json(rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+}
