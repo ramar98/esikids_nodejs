@@ -13,6 +13,7 @@ import courses_studentsRoutes from "./routes/courses_students.routes.js";
 import users_stagesRoutes from "./routes/users_stages.routes.js";
 import games from "./routes/games.routes.js";
 import stages from "./routes/stages.routes.js";
+import users_chatbot from "./routes/users_chatbot.routes.js";
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.use("/api", courses_studentsRoutes);
 app.use("/api", users_stagesRoutes);
 app.use("/api", games);
 app.use("/api", stages);
+app.use("/api", users_chatbot);
 
 
 app.use((req, res, next) => {
